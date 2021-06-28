@@ -9,15 +9,22 @@ class MemeGenerator extends Component {
             randomImg: "http://i.imgflip.com/1bij.jpg",
             allMemeImgs: ""
         }
+        this.changeHandler = this.changeHandler.bind(this)
+        this.submitHandler = this.submitHandler.bind(this)
     }  
-    /**
-     * We'll be using an API that provides a bunch of meme images.
-     * 
-     * Your task:
-     * make an API call to "https://api.imgflip.com/get_memes" and save the 
-     * data that comes back (`response.data.memes`) to a new state property
-     * called `allMemeImgs`. (The data that comes back is an array)
-     */
+    changeHandler(event){
+        const {name, value, type} = event.target
+        this.setState({
+            [name]: value
+        })
+    }
+
+    submitHandler(event){
+        event.preventDefault()
+        const randNum = Math.floor(Math.random() * this.state.allMemeImgs.length)
+        const randMemeImg = this.state.allMemeImgs[randNum].url
+        this.setState({ randomImg: randMemeImg })
+    }
     
     componentDidMount(){
         fetch("https://api.imgflip.com/get_memes")
@@ -33,8 +40,34 @@ class MemeGenerator extends Component {
         }
     
     render() {
+
         return (
-            <h1>MEME GENERATOR SECTION</h1>
+            <div>
+            <form className="meme-form" onSubmit={this.submitHandler}>
+                <input 
+                    type= "text" 
+                    name="topText" 
+                    placeholder="Enter Top Text" 
+                    value={this.state.topText}
+                    onChange={this.changeHandler}
+                />
+
+                <input 
+                    type="text" 
+                    name="bottomText" 
+                    placeholder="Enter Bottom Text" 
+                    value={this.state.bottomText} 
+                    onChange={this.changeHandler}
+                    />  
+            
+                <button>Gen</button>
+            </form>
+            <div className="meme">
+                    <img src={this.state.randomImg} alt="" />
+                    <h2 className="top">{this.state.topText}</h2>
+                    <h2 className="bottom">{this.state.bottomText}</h2>
+                </div>
+        </div>
         )
     }
 }

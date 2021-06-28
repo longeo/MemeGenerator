@@ -2,6 +2,9 @@ import React from "react"
 
 import Header from "./Header"
 import MemeGenerator from "./MemeGenerator"
+
+import './style.css';
+
 /**
  * Create 2 new components - Header and MemeGenerator
  * Header will only display things

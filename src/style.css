@@ -44,6 +44,7 @@ header > p {
 
 .meme > img {
   width: 100%;
+  align-self: center;
 }
 
 .meme > h2 {
